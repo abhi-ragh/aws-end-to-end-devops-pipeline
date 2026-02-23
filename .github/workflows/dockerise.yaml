@@ -14,7 +14,7 @@ env:
 jobs:
   test:
     name: Test Node App
-    runs-on: Ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
 
   container_scanning:
     name: Scanning Images using Trivy
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     needs: test
     steps:
       - name: Checkout code

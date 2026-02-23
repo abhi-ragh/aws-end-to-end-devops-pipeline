@@ -1,7 +1,14 @@
-FROM node:12.4-alpine
+FROM node:12.4-alpine AS build
 WORKDIR /app
 COPY package.json /app/package.json 
 RUN npm install 
 COPY . . 
+RUN npm run build
+
+FROM node:12.4-alpine
+WORKDIR /app
+COPY package.json /app/package.json 
+RUN npm install --only=production
+COPY --from=build /app/dist ./dist
 EXPOSE 5000
-CMD ["npm", "start"]
+CMD ["node", "dist/server.js"]

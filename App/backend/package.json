@@ -7,6 +7,8 @@
     "start": "nodemon --watch . --exec babel-node ./server.js",
     "start:prod": "node dist/server.js",
     "build": "rm -rf dist && babel ./ --out-dir dist --ignore ./node_modules,./dist",
+    "test": "jest --testEnvironment=node",
+    "test:watch": "jest --testEnvironment=node --watch",
     "seed": "node scripts/seed.js"
   },
   "dependencies": {
@@ -25,8 +27,11 @@
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+    "@babel/register": "^7.8.4",
     "nodemon": "^2.0.2",
-    "eslint": "^6.8.0"
+    "eslint": "^6.8.0",
+    "jest": "^26.6.3",
+    "babel-jest": "^26.6.3"
   },
   "repository": {
     "type": "git",

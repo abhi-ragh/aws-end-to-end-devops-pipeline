@@ -24,11 +24,19 @@ jobs:
         with:
           node-version: '18.x'
           
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: App/frontend
+
       - name: Run NPM test for frontend
         continue-on-error: true
         run: npm test
         working-directory: App/frontend
       
+      - name: Install backend dependencies
+        run: npm install
+        working-directory: App/backend
+
       - name: Run NPM test for backend
         continue-on-error: true
         run: npm test
@@ -96,11 +104,11 @@ jobs:
         working-directory: App/frontend
     
       - name: Push Frontend Docker image
-        run: docker push ${{ secrets.ECR_REPOSITORY }}/frontend:latest    
+        run: docker push ${{ secrets.ECR_REPOSITORY }}/frontend:${{ github.sha }}
 
       - name: Build an image from Backend Dockerfile
         run: docker build -t 870017957268.dkr.ecr.us-east-1.amazonaws.com/nodeapp/backend:${{ github.sha }} .
         working-directory: App/backend
 
       - name: Push Frontend Docker image
-        run: docker push ${{ secrets.ECR_REPOSITORY }}/backend:latest
+        run: docker push ${{ secrets.ECR_REPOSITORY }}/backend:${{ github.sha }}

@@ -2,17 +2,24 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+function required(name) {
+  if (!process.env[name]) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return process.env[name];
+}
+
 export default {
   PORT: process.env.PORT || 5000,
-  DB_HOST: process.env.DB_HOST || '',
-  DB_NAME: process.env.DB_NAME || 'database-1',
-  DB_USER: process.env.DB_USER || 'admin',
-  DB_PASSWORD: process.env.DB_PASSWORD || '12345678',
+
+  DB_HOST: required('DB_HOST'),
+  DB_NAME: required('DB_NAME'),
+  DB_USER: required('DB_USER'),
+  DB_PASSWORD: required('DB_PASSWORD'),
   DB_PORT: process.env.DB_PORT || 3306,
-  DB_SSL: process.env.DB_SSL || 'false',
+  DB_SSL: process.env.DB_SSL === 'true',
   DB_DIALECT: process.env.DB_DIALECT || 'mysql',
-  JWT_SECRET: process.env.JWT_SECRET || 'somethingsecret',
-  PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID || 'sb',
-  accessKeyId: process.env.accessKeyId || '',
-  secretAccessKey: process.env.secretAccessKey || '',
+
+  JWT_SECRET: required('JWT_SECRET'),
+  PAYPAL_CLIENT_ID: required('PAYPAL_CLIENT_ID')
 };

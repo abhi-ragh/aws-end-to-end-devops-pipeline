@@ -37,6 +37,7 @@ jobs:
   container_scanning:
     name: Scanning Images using Trivy
     runs-on: ubuntu-24.04
+    needs: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -74,6 +75,7 @@ jobs:
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    needs: container_scanning
     steps:
       - uses: actions/checkout@v4
       - name: Set up Docker Buildx

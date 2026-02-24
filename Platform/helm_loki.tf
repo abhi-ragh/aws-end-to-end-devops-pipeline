@@ -18,7 +18,9 @@ resource "helm_release" "loki" {
 
         service = {
           type = "LoadBalancer"
-          port = 3100
+          annotations = {
+             "service.beta.kubernetes.io/aws-load-balancer-name" = "nodeapp-loki"
+          }
         }
 
         resources = {

@@ -19,6 +19,9 @@ resource "helm_release" "kube_prometheus_stack" {
       grafana = {
         service = {
           type = "LoadBalancer"
+          annotations = {
+             "service.beta.kubernetes.io/aws-load-balancer-name" = "nodeapp-grafana"
+          }
         }
 
         adminUser     = "admin"
@@ -38,6 +41,9 @@ resource "helm_release" "kube_prometheus_stack" {
 
         service = {
           type = "LoadBalancer"
+          annotations = {
+             "service.beta.kubernetes.io/aws-load-balancer-name" = "nodeapp-prometheus"
+          }
         }
       }
 
@@ -46,6 +52,9 @@ resource "helm_release" "kube_prometheus_stack" {
 
         service = {
           type = "LoadBalancer"
+          annotations = {
+             "service.beta.kubernetes.io/aws-load-balancer-name" = "nodeapp-alertmanager"
+          }
         }
       }
     })

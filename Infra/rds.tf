@@ -30,7 +30,7 @@ module "db" {
   source  = "terraform-aws-modules/rds/aws"
   version = "~> 6.0"
 
-  identifier = "demodb"
+  identifier = "nodeappdb"
 
   engine               = "mysql"
   engine_version       = "8.0"
@@ -40,7 +40,7 @@ module "db" {
   instance_class    = "db.t3.micro"
   allocated_storage = 20
 
-  db_name  = "nodeapp-db"
+  db_name  = "nodeappdb"
   username = "admin"
 
   manage_master_user_password = true
@@ -71,7 +71,7 @@ module "db" {
   ]
 
   tags = {
-    Name        = "demodb"
+    Name        = "nodeappdb"
     Environment = "dev"
     Terraform   = "true"
   }

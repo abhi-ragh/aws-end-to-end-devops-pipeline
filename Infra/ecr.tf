@@ -1,6 +1,7 @@
 resource "aws_ecr_repository" "backend_repo" {
   name                 = "nodeapp/backend"
   image_tag_mutability = "MUTABLE"
+  force_delete         = true
 
   image_scanning_configuration {
     scan_on_push = true
@@ -10,6 +11,7 @@ resource "aws_ecr_repository" "backend_repo" {
 resource "aws_ecr_repository" "frontend_repo" {
   name                 = "nodeapp/frontend"
   image_tag_mutability = "MUTABLE"
+  force_delete         = true
 
   image_scanning_configuration {
     scan_on_push = true

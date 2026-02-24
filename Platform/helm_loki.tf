@@ -4,7 +4,9 @@ resource "helm_release" "loki" {
   chart            = "loki"
   namespace        = "loki"
   create_namespace = true
-  depends_on = [helm_release.aws_load_balancer_controller]
+
+  timeout = 600
+  wait    = true
 
   values = [
     yamlencode({

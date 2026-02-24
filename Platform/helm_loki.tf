@@ -41,6 +41,10 @@ resource "helm_release" "loki" {
           replication_factor = 1
         }
 
+        limits_config = {
+          allow_structured_metadata = false
+        }
+
         schemaConfig = {
           configs = [
             {

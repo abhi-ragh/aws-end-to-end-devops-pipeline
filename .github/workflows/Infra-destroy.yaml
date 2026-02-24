@@ -15,6 +15,16 @@ jobs:
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v3
 
+      - name: Terraform Init - Platform
+        if: always()
+        run: terraform init
+        working-directory: Platform/
+
+      - name: Terraform Destroy - Platform
+        if: always()
+        run: terraform destroy -auto-approve
+        working-directory: Platform/
+
       - name: Terraform Init - Infra 
         if: always()
         run: terraform init

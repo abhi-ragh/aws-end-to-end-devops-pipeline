@@ -88,7 +88,3 @@ module "irsa_loki" {
     "system:serviceaccount:loki:loki-sa"
   ]
 }
-
-output "loki_irsa_role_arn" {
-  value = module.irsa_loki.iam_role_arn
-}

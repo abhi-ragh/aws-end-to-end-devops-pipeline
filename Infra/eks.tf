@@ -31,6 +31,12 @@ module "eks" {
             min_size       = 2
             max_size       = 5
             desired_size   = 3
+            
+            metadata_options = {
+              http_endpoint    = "enabled"
+              http_tokens      = "optional"
+              http_put_response_hop_limit = 2
+            }
         }
     }
     

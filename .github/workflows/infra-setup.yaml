@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - 'Infra/**'
+      - 'Platform/**'
   pull_request:
     paths:
       - 'Infra/**'
+      - 'Platform/**'
 
 jobs:
   terraform-infra: 

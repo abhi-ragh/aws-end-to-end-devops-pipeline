@@ -4,12 +4,12 @@ data "aws_iam_policy_document" "alb_assume_role" {
 
     principals {
       type        = "Federated"
-      identifiers = [module.eks.oidc_provider_arn]
+      identifiers = [data.terraform_remote_state.infra.outputs.cluster_oidc_provider_arn]
     }
 
     condition {
       test     = "StringEquals"
-      variable = "${replace(module.eks.oidc_provider, "https://", "")}:sub"
+      variable = "${replace(data.terraform_remote_state.infra.outputs.cluster_oidc_provider, "https://", "")}:sub"
       values   = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
     }
   }

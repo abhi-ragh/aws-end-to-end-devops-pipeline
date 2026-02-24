@@ -11,7 +11,7 @@ resource "helm_release" "loki" {
         create = true
         name   = "loki-sa"
         annotations = {
-          "eks.amazonaws.com/role-arn" = module.irsa_loki.iam_role_arn
+          "eks.amazonaws.com/role-arn" = data.terraform_remote_state.infra.outputs.loki_irsa_role_arn
         }
       }
 
@@ -41,11 +41,11 @@ resource "helm_release" "loki" {
           aws = {
             region              = "us-east-1"
             s3forcepathstyle    = false
-            bucketnames         = join(",", [
-              aws_s3_bucket.loki_chunks.bucket,
-              aws_s3_bucket.loki_ruler.bucket,
-              aws_s3_bucket.loki_index.bucket
-            ])
+              bucketnames = join(",", [
+                data.terraform_remote_state.infra.outputs.loki_chunks_bucket,
+                data.terraform_remote_state.infra.outputs.loki_ruler_bucket,
+                data.terraform_remote_state.infra.outputs.loki_index_bucket
+              ])
           }
 
           boltdb_shipper = {

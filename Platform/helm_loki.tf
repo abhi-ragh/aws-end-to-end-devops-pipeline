@@ -10,10 +10,12 @@ resource "helm_release" "loki" {
 
   values = [
     yamlencode({
+
       deploymentMode = "SingleBinary"
 
       singleBinary = {
         replicas = 1
+
         resources = {
           requests = {
             cpu    = "200m"
@@ -24,6 +26,35 @@ resource "helm_release" "loki" {
             memory = "1Gi"
           }
         }
+
+        persistence = {
+          enabled      = true
+          size         = "10Gi"
+          storageClass = "gp2"
+        }
+      }
+
+      # HARD disable distributed components
+      backend = { replicas = 0 }
+      read    = { replicas = 0 }
+      write   = { replicas = 0 }
+      gateway = { enabled = false }
+
+      # HARD disable all caching layers
+      chunksCache = {
+        enabled = false
+      }
+
+      resultsCache = {
+        enabled = false
+      }
+
+      memcached = {
+        enabled = false
+      }
+
+      memcachedExporter = {
+        enabled = false
       }
 
       serviceAccount = {
@@ -52,6 +83,7 @@ resource "helm_release" "loki" {
               store        = "boltdb-shipper"
               object_store = "s3"
               schema       = "v13"
+
               index = {
                 prefix = "index_"
                 period = "24h"
@@ -74,12 +106,6 @@ resource "helm_release" "loki" {
           }
         }
       }
-
-      # Disable distributed components explicitly
-      backend = { replicas = 0 }
-      read    = { replicas = 0 }
-      write   = { replicas = 0 }
-      gateway = { enabled = false }
     })
   ]
 }

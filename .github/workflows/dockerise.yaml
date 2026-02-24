@@ -100,7 +100,7 @@ jobs:
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
      
       - name: Build an image from Frontend Dockerfile
-        run: docker build -t 870017957268.dkr.ecr.us-east-1.amazonaws.com/nodeapp/frontend:${{ github.sha }} .
+        run: docker build --build-arg REACT_APP_API_URL=http://backend-service:5000 -t 870017957268.dkr.ecr.us-east-1.amazonaws.com/nodeapp/frontend:${{ github.sha }} .
         working-directory: App/frontend
     
       - name: Push Frontend Docker image

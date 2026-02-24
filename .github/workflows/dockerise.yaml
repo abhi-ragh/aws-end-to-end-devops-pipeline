@@ -117,8 +117,8 @@ jobs:
 
       - name: Update K8s image tag
         run: |
-          sed -i "s|image: .*frontend:.*|image: 870017957268.dkr.ecr.us-east-1.amazonaws.com/nodeapp/frontend:${{ github.sha }}|g" k8s/frontend.yaml
-          sed -i "s|image: .*backend:.*|image: 870017957268.dkr.ecr.us-east-1.amazonaws.com/nodeapp/backend:${{ github.sha }}|g" k8s/backend.yaml
+          sed -i "s|image: .*frontend:.*|image: 870017957268.dkr.ecr.us-east-1.amazonaws.com/nodeapp/frontend:${{ github.sha }}|g" K8s/frontend.yaml
+          sed -i "s|image: .*backend:.*|image: 870017957268.dkr.ecr.us-east-1.amazonaws.com/nodeapp/backend:${{ github.sha }}|g" K8s/backend.yaml
 
       - name: Commit and push changes
         run: |

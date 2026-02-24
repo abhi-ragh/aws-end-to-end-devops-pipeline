@@ -28,9 +28,9 @@ module "eks" {
         eks-nodes = {
             instance_types = ["c7i-flex.large"]
             ami_type       = "AL2_x86_64"
-            min_size       = 0
-            max_size       = 1
-            desired_size   = 0
+            min_size       = 2
+            max_size       = 5
+            desired_size   = 3
             
             metadata_options = {
               http_endpoint    = "enabled"

@@ -15,7 +15,7 @@ resource "kubernetes_secret" "backend_env" {
   }
 
   data = {
-    DB_HOST     = data.terraform_remote_state.infra.outputs.rds_endpoint
+    DB_HOST     = data.terraform_remote_state.infra.outputs.rds_host
     DB_NAME     = data.terraform_remote_state.infra.outputs.rds_db_name
     DB_USER     = data.terraform_remote_state.infra.outputs.rds_username
     DB_PASSWORD = local.db_secret.password

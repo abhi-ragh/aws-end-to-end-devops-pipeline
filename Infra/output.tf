@@ -34,8 +34,8 @@ output "loki_index_bucket" {
   value = aws_s3_bucket.loki_index.bucket
 }
 
-output "rds_endpoint" {
-  value = module.db.db_instance_endpoint
+output "rds_host" {
+  value = module.db.db_instance_address
   sensitive = true
 }
 

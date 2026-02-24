@@ -17,6 +17,9 @@ spec:
           image: 870017957268.dkr.ecr.us-east-1.amazonaws.com/nodeapp/backend:b2a29f5f7439b7e885a518a268ef2da8b6266f17
           ports:
             - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: backend-env
 ---
 apiVersion: v1
 kind: Service

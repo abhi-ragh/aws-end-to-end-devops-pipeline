@@ -33,3 +33,19 @@ output "loki_ruler_bucket" {
 output "loki_index_bucket" {
   value = aws_s3_bucket.loki_index.bucket
 }
+
+output "rds_endpoint" {
+  value = module.db.db_instance_endpoint
+}
+
+output "rds_db_name" {
+  value = module.db.db_name
+}
+
+output "rds_username" {
+  value = module.db.db_instance_username
+}
+
+output "rds_master_secret_arn" {
+  value = module.db.db_instance_master_user_secret_arn
+}

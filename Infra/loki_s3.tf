@@ -1,13 +1,13 @@
 resource "aws_s3_bucket" "loki_chunks" {
-  bucket = "dev-loki-chunks"
+  bucket = "nodeapp-loki-chunks"
 }
 
 resource "aws_s3_bucket" "loki_ruler" {
-  bucket = "dev-loki-ruler"
+  bucket = "nodeapp-loki-ruler"
 }
 
 resource "aws_s3_bucket" "loki_index" {
-  bucket = "dev-loki-index"
+  bucket = "nodeapp-loki-index"
 }
 
 resource "aws_s3_bucket_public_access_block" "chunks" {

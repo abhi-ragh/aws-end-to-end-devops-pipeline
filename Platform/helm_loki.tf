@@ -5,11 +5,27 @@ resource "helm_release" "loki" {
   namespace        = "loki"
   create_namespace = true
 
-  timeout = 600
   wait    = true
+  timeout = 600
 
   values = [
     yamlencode({
+      deploymentMode = "SingleBinary"
+
+      singleBinary = {
+        replicas = 1
+        resources = {
+          requests = {
+            cpu    = "200m"
+            memory = "512Mi"
+          }
+          limits = {
+            cpu    = "500m"
+            memory = "1Gi"
+          }
+        }
+      }
+
       serviceAccount = {
         create = true
         name   = "loki-sa"
@@ -54,6 +70,12 @@ resource "helm_release" "loki" {
           }
         }
       }
+
+      # Disable distributed components explicitly
+      backend = { replicas = 0 }
+      read    = { replicas = 0 }
+      write   = { replicas = 0 }
+      gateway = { enabled = false }
     })
   ]
 }

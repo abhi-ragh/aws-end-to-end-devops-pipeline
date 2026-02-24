@@ -36,6 +36,7 @@ output "loki_index_bucket" {
 
 output "rds_endpoint" {
   value = module.db.db_instance_endpoint
+  sensitive = true
 }
 
 output "rds_db_name" {

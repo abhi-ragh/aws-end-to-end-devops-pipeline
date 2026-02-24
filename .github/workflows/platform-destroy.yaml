@@ -1,4 +1,4 @@
-name: "Infra Destroy"
+name: "Platform Destroy"
 on:
   workflow_dispatch:
     
@@ -15,12 +15,12 @@ jobs:
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init - Infra 
+      - name: Terraform Init - Platform
         if: always()
         run: terraform init
-        working-directory: Infra/
+        working-directory: Platform/
 
-      - name: Terraform Destroy - Infra
+      - name: Terraform Destroy - Platform
         if: always()
         run: terraform destroy -auto-approve
-        working-directory: Infra/
+        working-directory: Platform/

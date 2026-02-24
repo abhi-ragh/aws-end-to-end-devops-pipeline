@@ -46,6 +46,7 @@ output "rds_db_name" {
 
 output "rds_username" {
   value = module.db.db_instance_username
+  sensitive = true
 }
 
 output "rds_master_secret_arn" {

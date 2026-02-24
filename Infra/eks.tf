@@ -29,7 +29,7 @@ module "eks" {
             instance_types = ["c7i-flex.large"]
             ami_type       = "AL2_x86_64"
             min_size       = 0
-            max_size       = 0
+            max_size       = 1
             desired_size   = 0
             
             metadata_options = {

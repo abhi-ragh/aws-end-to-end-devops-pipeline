@@ -39,7 +39,7 @@ output "rds_endpoint" {
 }
 
 output "rds_db_name" {
-  value = module.db.db_name
+  value = module.db.db_instance_name
 }
 
 output "rds_username" {

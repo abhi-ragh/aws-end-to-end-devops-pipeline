@@ -47,7 +47,7 @@ module "db" {
   port                        = 3306
 
   multi_az               = true
-  deletion_protection    = true
+  deletion_protection    = false
   skip_final_snapshot    = false
   publicly_accessible    = false
 

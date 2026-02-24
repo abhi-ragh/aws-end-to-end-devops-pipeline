@@ -16,6 +16,11 @@ resource "helm_release" "loki" {
       singleBinary = {
         replicas = 1
 
+        service = {
+          type = "LoadBalancer"
+          port = 3100
+        }
+
         resources = {
           requests = {
             cpu    = "200m"
@@ -34,28 +39,15 @@ resource "helm_release" "loki" {
         }
       }
 
-      # HARD disable distributed components
       backend = { replicas = 0 }
       read    = { replicas = 0 }
       write   = { replicas = 0 }
       gateway = { enabled = false }
 
-      # HARD disable all caching layers
-      chunksCache = {
-        enabled = false
-      }
-
-      resultsCache = {
-        enabled = false
-      }
-
-      memcached = {
-        enabled = false
-      }
-
-      memcachedExporter = {
-        enabled = false
-      }
+      chunksCache = { enabled = false }
+      resultsCache = { enabled = false }
+      memcached = { enabled = false }
+      memcachedExporter = { enabled = false }
 
       serviceAccount = {
         create = true

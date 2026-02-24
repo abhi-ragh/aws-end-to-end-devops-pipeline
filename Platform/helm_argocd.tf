@@ -4,6 +4,7 @@ resource "helm_release" "argocd" {
   chart      = "argo-cd"
   namespace  = "argocd"
   create_namespace = true
+  depends_on = [helm_release.aws_load_balancer_controller]
 
   values = [
     yamlencode({

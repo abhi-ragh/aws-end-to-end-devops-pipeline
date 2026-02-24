@@ -4,6 +4,7 @@ resource "helm_release" "loki" {
   chart            = "loki"
   namespace        = "loki"
   create_namespace = true
+  depends_on = [helm_release.aws_load_balancer_controller]
 
   values = [
     yamlencode({
@@ -37,19 +38,17 @@ resource "helm_release" "loki" {
           ]
         }
 
-        storageConfig = {
-          aws = {
-            region              = "us-east-1"
-            s3forcepathstyle    = false
-              bucketnames = join(",", [
-                data.terraform_remote_state.infra.outputs.loki_chunks_bucket,
-                data.terraform_remote_state.infra.outputs.loki_ruler_bucket,
-                data.terraform_remote_state.infra.outputs.loki_index_bucket
-              ])
+        storage = {
+          type = "s3"
+
+          bucketNames = {
+            chunks = data.terraform_remote_state.infra.outputs.loki_chunks_bucket
+            ruler  = data.terraform_remote_state.infra.outputs.loki_ruler_bucket
+            admin  = data.terraform_remote_state.infra.outputs.loki_index_bucket
           }
 
-          boltdb_shipper = {
-            shared_store = "s3"
+          s3 = {
+            region = "us-east-1"
           }
         }
       }

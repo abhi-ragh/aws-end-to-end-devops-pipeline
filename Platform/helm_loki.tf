@@ -55,8 +55,4 @@ resource "helm_release" "loki" {
       }
     })
   ]
-
-  depends_on = [
-    module.irsa_loki
-  ]
 }

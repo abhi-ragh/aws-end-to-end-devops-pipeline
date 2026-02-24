@@ -48,7 +48,7 @@ module "db" {
 
   multi_az               = true
   deletion_protection    = false
-  skip_final_snapshot    = false
+  skip_final_snapshot    = true
   publicly_accessible    = false
 
   vpc_security_group_ids = [aws_security_group.rds_sg.id]

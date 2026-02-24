@@ -7,7 +7,7 @@ resource "helm_release" "aws_load_balancer_controller" {
   set = [
     {
       name  = "clusterName"
-      value = module.eks.cluster_name
+      value = data.terraform_remote_state.infra.outputs.cluster_name
     },
     {
       name  = "serviceAccount.create"

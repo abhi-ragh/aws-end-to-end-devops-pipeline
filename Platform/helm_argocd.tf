@@ -1,3 +1,8 @@
+variable "argocd_admin_password_hash" {
+  type      = string
+  sensitive = true
+}
+
 resource "helm_release" "argocd" {
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
@@ -25,6 +30,13 @@ resource "helm_release" "argocd" {
       repoServer = {
         metrics = {
           enabled = false
+        }
+      }
+
+      configs = {
+        secret = {
+          argocdServerAdminPassword      = var.argocd_admin_password_hash
+          argocdServerAdminPasswordMtime = timestamp()
         }
       }
     })

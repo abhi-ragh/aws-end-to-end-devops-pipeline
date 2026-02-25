@@ -1,3 +1,40 @@
+## IAM POLICY FOR ALERTMANAGER
+resource "aws_iam_policy" "alertmanager_sns_policy" {
+  name = "AlertmanagerSNSPublishPolicy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "sns:Publish"
+        ]
+        Resource = aws_sns_topic.eks_alerts.arn
+      }
+    ]
+  })
+}
+
+## IRSA ROLE FOR ALERTMANAGER
+module "alertmanager_irsa" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version = "5.39.0"
+
+  create_role = true
+  role_name   = "eks-alertmanager-sns-role"
+
+  provider_url = data.terraform_remote_state.infra.outputs.cluster_oidc_provider
+
+  role_policy_arns = [
+    aws_iam_policy.alertmanager_sns_policy.arn
+  ]
+
+  oidc_fully_qualified_subjects = [
+    "system:serviceaccount:monitoring:monitoring-kube-prometheus-alertmanager"
+  ]
+}
+
 variable "grafana_admin_password" {
   type      = string
   sensitive = true

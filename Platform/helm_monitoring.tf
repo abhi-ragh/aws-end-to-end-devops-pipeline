@@ -16,17 +16,18 @@ resource "helm_release" "kube_prometheus_stack" {
   values = [
     yamlencode({
 
-        grafana = {
-          service = {
-            type = "ClusterIP"
+      grafana = {
+        service = {
+          type = "LoadBalancer"
+          annotations = {
+            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
+            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
+            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
           }
-
-          "grafana.ini" = {
-            server = {
-              root_url = "%(protocol)s://%(domain)s/grafana"
-              serve_from_sub_path = true
-            }
         }
+
+        adminUser     = "admin"
+        adminPassword = var.grafana_admin_password
 
         persistence = {
           enabled      = true
@@ -37,24 +38,27 @@ resource "helm_release" "kube_prometheus_stack" {
 
       prometheus = {
         service = {
-          type = "ClusterIP"
+          type = "LoadBalancer"
+          annotations = {
+            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
+            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
+            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
+          }
         }
 
         prometheusSpec = {
           retention = "10d"
-          externalUrl = "/prometheus"
-          routePrefix = "/prometheus"
         }
       }
 
       alertmanager = {
         service = {
-          type = "ClusterIP"
-        }
-
-        alertmanagerSpec = {
-          externalUrl = "/alertmanager"
-          routePrefix = "/alertmanager"
+          type = "LoadBalancer"
+          annotations = {
+            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
+            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
+            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
+          }
         }
       }
     })

@@ -17,13 +17,13 @@ resource "helm_release" "argocd" {
     yamlencode({
       server = {
         service = {
-          type = "ClusterIP"
+          type = "LoadBalancer"
+          annotations = {
+            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
+            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
+            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
+          }
         }
-
-        extraArgs = [
-          "--basehref", "/argo",
-          "--rootpath", "/argo"
-        ]
       }
 
       controller = {

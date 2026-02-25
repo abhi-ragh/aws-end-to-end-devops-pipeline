@@ -1,4 +1,5 @@
-// API configuration - reads from environment variable or defaults to localhost for development
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+// API configuration - use relative paths in production so browser calls the same origin.
+// Do not bake an absolute backend hostname into the client bundle.
+const API_BASE_URL = '';
 
 export default API_BASE_URL;

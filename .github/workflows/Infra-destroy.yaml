@@ -25,14 +25,6 @@ jobs:
         run: terraform destroy -auto-approve
         working-directory: Platform/
 
-      - name: Terraform Init - EKS
-        run: terraform init
-        working-directory: EKS/
-
-      - name: Terraform Destroy - EKS
-        run: terraform destroy -auto-approve
-        working-directory: EKS/
-
       - name: Terraform Init - Infra 
         run: terraform init
         working-directory: Infra/
@@ -40,3 +32,11 @@ jobs:
       - name: Terraform Destroy - Infra
         run: terraform destroy -auto-approve
         working-directory: Infra/
+
+      - name: Terraform Init - Network
+        run: terraform init
+        working-directory: Network/
+
+      - name: Terraform Destroy - Network
+        run: terraform destroy -auto-approve
+        working-directory: Network/

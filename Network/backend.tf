@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     bucket                  = "nodeapp-terraform-state"
     dynamodb_table          = "nodeapp-terraform-state-lock-db"
-    key                     = "nodeapp-terraform-platform"
+    key                     = "nodeapp-terraform-infra"
     region                  = "us-east-1"
   }
 }

@@ -1,4 +1,4 @@
-data "terraform_remote_state" "infra" {
+data "terraform_remote_state" "network" {
   backend = "s3"
 
   config = {
@@ -8,7 +8,7 @@ data "terraform_remote_state" "infra" {
   }
 }
 
-data "terraform_remote_state" "eks" {
+data "terraform_remote_state" "infra" {
   backend = "s3"
 
   config = {

@@ -26,7 +26,6 @@ resource "helm_release" "kube_prometheus_stack" {
               root_url = "%(protocol)s://%(domain)s/grafana"
               serve_from_sub_path = true
             }
-          }
         }
 
         persistence = {

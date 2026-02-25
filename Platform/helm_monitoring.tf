@@ -16,25 +16,37 @@ resource "helm_release" "kube_prometheus_stack" {
   values = [
     yamlencode({
 
-      grafana = {
-        service = {
-          type = "LoadBalancer"
-          annotations = {
-            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
-            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
-            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-          }
-        }
+  grafana = {
+    service = {
+      type = "LoadBalancer"
+      annotations = {
+        "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
+        "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
+        "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
+      }
+    }
 
-        adminUser     = "admin"
-        adminPassword = var.grafana_admin_password
+    adminUser     = "admin"
+    adminPassword = var.grafana_admin_password
 
-        persistence = {
-          enabled      = true
-          size         = "10Gi"
-          storageClass = "gp2"
+    persistence = {
+      enabled      = true
+      size         = "10Gi"
+      storageClass = "gp2"
+    }
+
+    additionalDataSources = [
+      {
+        name   = "Loki"
+        type   = "loki"
+        access = "proxy"
+        url    = "http://loki.loki.svc.cluster.local:3100"
+        jsonData = {
+          maxLines = 1000
         }
       }
+    ]
+  }
 
       prometheus = {
         service = {

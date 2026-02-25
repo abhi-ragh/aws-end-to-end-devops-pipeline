@@ -16,18 +16,16 @@ resource "helm_release" "kube_prometheus_stack" {
   values = [
     yamlencode({
 
-      grafana = {
-        service = {
-          type = "ClusterIP"
-        }
+        grafana = {
+          service = {
+            type = "ClusterIP"
+          }
 
-        adminUser     = "admin"
-        adminPassword = var.grafana_admin_password
-
-        grafana.ini = {
-          server = {
-            root_url = "%(protocol)s://%(domain)s/grafana"
-            serve_from_sub_path = true
+          "grafana.ini" = {
+            server = {
+              root_url = "%(protocol)s://%(domain)s/grafana"
+              serve_from_sub_path = true
+            }
           }
         }
 

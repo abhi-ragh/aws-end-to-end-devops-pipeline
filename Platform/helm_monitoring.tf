@@ -18,17 +18,18 @@ resource "helm_release" "kube_prometheus_stack" {
 
       grafana = {
         service = {
-          type = "LoadBalancer"
-          annotations = {
-            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
-            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
-            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-            "service.beta.kubernetes.io/aws-load-balancer-name"            = "nodeapp-grafana"
-          }
+          type = "ClusterIP"
         }
 
         adminUser     = "admin"
         adminPassword = var.grafana_admin_password
+
+        grafana.ini = {
+          server = {
+            root_url = "%(protocol)s://%(domain)s/grafana"
+            serve_from_sub_path = true
+          }
+        }
 
         persistence = {
           enabled      = true
@@ -38,32 +39,25 @@ resource "helm_release" "kube_prometheus_stack" {
       }
 
       prometheus = {
-        prometheusSpec = {
-          retention = "10d"
+        service = {
+          type = "ClusterIP"
         }
 
-        service = {
-          type = "LoadBalancer"
-          annotations = {
-            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
-            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
-            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-            "service.beta.kubernetes.io/aws-load-balancer-name"            = "nodeapp-prometheus"
-          }
+        prometheusSpec = {
+          retention = "10d"
+          externalUrl = "/prometheus"
+          routePrefix = "/prometheus"
         }
       }
 
       alertmanager = {
-        alertmanagerSpec = {}
-
         service = {
-          type = "LoadBalancer"
-          annotations = {
-            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
-            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
-            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-            "service.beta.kubernetes.io/aws-load-balancer-name"            = "nodeapp-alertmanager"
-          }
+          type = "ClusterIP"
+        }
+
+        alertmanagerSpec = {
+          externalUrl = "/alertmanager"
+          routePrefix = "/alertmanager"
         }
       }
     })

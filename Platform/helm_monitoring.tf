@@ -111,15 +111,6 @@ resource "helm_release" "kube_prometheus_stack" {
       ########################
 alertmanager = {
 
-  service = {
-    type = "LoadBalancer"
-    annotations = {
-      "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
-      "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
-      "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-    }
-  }
-
   serviceAccount = {
     create = true
     name   = "monitoring-kube-prometheus-alertmanager"
@@ -129,25 +120,7 @@ alertmanager = {
   }
 
   alertmanagerSpec = {
-    additionalConfig = {
-      route = {
-        receiver = "sns-notifications"
-      }
-
-      receivers = [
-        {
-          name = "sns-notifications"
-          sns_configs = [
-            {
-              topic_arn = aws_sns_topic.eks_alerts.arn
-              sigv4 = {
-                region = "us-east-1"
-              }
-            }
-          ]
-        }
-      ]
-    }
+    configSecret = "alertmanager-sns-config"
   }
 }
 

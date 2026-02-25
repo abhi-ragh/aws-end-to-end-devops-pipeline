@@ -20,7 +20,10 @@ resource "helm_release" "kube_prometheus_stack" {
         service = {
           type = "LoadBalancer"
           annotations = {
-             "service.beta.kubernetes.io/aws-load-balancer-name" = "nodeapp-grafana"
+            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
+            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
+            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
+            "service.beta.kubernetes.io/aws-load-balancer-name"            = "nodeapp-grafana"
           }
         }
 
@@ -42,7 +45,10 @@ resource "helm_release" "kube_prometheus_stack" {
         service = {
           type = "LoadBalancer"
           annotations = {
-             "service.beta.kubernetes.io/aws-load-balancer-name" = "nodeapp-prometheus"
+            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
+            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
+            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
+            "service.beta.kubernetes.io/aws-load-balancer-name"            = "nodeapp-prometheus"
           }
         }
       }
@@ -53,7 +59,10 @@ resource "helm_release" "kube_prometheus_stack" {
         service = {
           type = "LoadBalancer"
           annotations = {
-             "service.beta.kubernetes.io/aws-load-balancer-name" = "nodeapp-alertmanager"
+            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
+            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
+            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
+            "service.beta.kubernetes.io/aws-load-balancer-name"            = "nodeapp-alertmanager"
           }
         }
       }

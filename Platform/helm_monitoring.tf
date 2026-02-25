@@ -24,7 +24,7 @@ module "alertmanager_irsa" {
   create_role = true
   role_name   = "eks-alertmanager-sns-role"
 
-  provider_url = data.terraform_remote_state.infra.outputs.cluster_oidc_provider
+  provider_url = data.terraform_remote_state.eks.outputs.cluster_oidc_provider
 
   role_policy_arns = [
     aws_iam_policy.alertmanager_sns_policy.arn

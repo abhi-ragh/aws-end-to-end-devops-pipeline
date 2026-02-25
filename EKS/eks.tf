@@ -40,8 +40,8 @@ module "eks" {
         }
     }
     
-    vpc_id     = module.vpc.vpc_id
-    subnet_ids = module.vpc.private_subnets
+    vpc_id     = data.terraform_remote_state.infra.outputs.vpc_id
+    subnet_ids = data.terraform_remote_state.infra.outputs.private_subnets
     
     tags = {
         Environment = "dev"

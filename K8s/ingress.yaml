@@ -29,6 +29,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: platform
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /healthz
 spec:
   ingressClassName: alb
   rules:
@@ -51,6 +52,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: platform
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /api/health
 spec:
   ingressClassName: alb
   rules:
@@ -73,6 +75,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: platform
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /-/ready
 spec:
   ingressClassName: alb
   rules:
@@ -95,6 +98,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: platform
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /-/ready
 spec:
   ingressClassName: alb
   rules:
@@ -117,6 +121,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: platform
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /ready
 spec:
   ingressClassName: alb
   rules:

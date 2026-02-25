@@ -128,31 +128,33 @@ resource "helm_release" "kube_prometheus_stack" {
           }
         }
 
-        config = {
-          global = {
-            resolve_timeout = "5m"
-          }
-
-          route = {
-            receiver       = "sns-notifications"
-            group_wait     = "30s"
-            group_interval = "5m"
-            repeat_interval = "4h"
-          }
-
-          receivers = [
-            {
-              name = "sns-notifications"
-              sns_configs = [
-                {
-                  topic_arn = aws_sns_topic.eks_alerts.arn
-                  sigv4 = {
-                    region = "us-east-1"
-                  }
-                }
-              ]
+        alertmanagerSpec = {
+          config = {
+            global = {
+              resolve_timeout = "5m"
             }
-          ]
+
+            route = {
+              receiver        = "sns-notifications"
+              group_wait      = "30s"
+              group_interval  = "5m"
+              repeat_interval = "4h"
+            }
+
+            receivers = [
+              {
+                name = "sns-notifications"
+                sns_configs = [
+                  {
+                    topic_arn = aws_sns_topic.eks_alerts.arn
+                    sigv4 = {
+                      region = "us-east-1"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         }
       }
 

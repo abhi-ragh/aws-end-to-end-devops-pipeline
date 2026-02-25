@@ -3,7 +3,7 @@ data "terraform_remote_state" "network" {
 
   config = {
     bucket = "nodeapp-terraform-state"
-    key    = "nodeapp-terraform-infra"
+    key    = "nodeapp-terraform-network"
     region = "us-east-1"
   }
 }

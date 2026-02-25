@@ -3,6 +3,7 @@ import Product from '../models/productModel';
 import { Review } from '../models/initModels';
 import { isAuth, isAdmin } from '../util';
 import { Op } from 'sequelize';
+import sampleData from '../data';
 
 const router = express.Router();
 
@@ -18,6 +19,10 @@ router.get('/', async (req, res) => {
     order.push(['id', 'DESC']);
   }
   const products = await Product.findAll({ where, order });
+  // If DB has no products (fresh DB), fall back to the local sample data
+  if (!products || products.length === 0) {
+    return res.send(sampleData.products || []);
+  }
   res.send(products);
 });
 

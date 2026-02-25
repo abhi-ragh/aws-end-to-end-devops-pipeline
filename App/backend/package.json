@@ -9,7 +9,7 @@
     "build": "rm -rf dist && babel ./ --out-dir dist --ignore ./node_modules,./dist",
     "test": "jest --testEnvironment=node",
     "test:watch": "jest --testEnvironment=node --watch",
-    "seed": "node scripts/seed.js"
+    "seed": "babel-node scripts/seed.js"
   },
   "dependencies": {
     "aws-sdk": "^2.702.0",

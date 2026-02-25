@@ -4,9 +4,8 @@ ENV NODE_OPTIONS=--openssl-legacy-provider
 COPY package.json /app/package.json 
 RUN npm install 
 COPY . . 
-ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
+# Do not set REACT_APP_API_URL at build time — frontend uses relative paths.
 RUN npm run build
 
 FROM nginx:alpine

@@ -1,7 +1,7 @@
 resource "aws_security_group" "rds_sg" {
   name        = "rds-sg"
   description = "Allow MySQL access from EKS nodes"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = data.terraform_remote_state.network.outputs.vpc_id
 
   ingress {
     description     = "MySQL from EKS nodes"
@@ -54,7 +54,7 @@ module "db" {
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
   create_db_subnet_group = true
-  subnet_ids             = module.vpc.database_subnets
+  subnet_ids             = data.terraform_remote_state.network.outputs.database_subnets
 
   backup_retention_period = 7
   maintenance_window      = "Mon:00:00-Mon:03:00"

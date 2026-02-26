@@ -93,7 +93,7 @@ resource "helm_release" "argo_rollouts" {
 }
 
 resource "kubernetes_manifest" "nodeapp" {
-  depends_on = [ helm_release.argocd ]
+  depends_on = [ helm_release.argocd, helm_release.argo_rollouts]
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
@@ -126,7 +126,7 @@ resource "kubernetes_manifest" "nodeapp" {
 }
 
 resource "kubernetes_manifest" "alertmanager" {
-  depends_on = [ helm_release.argocd ]
+  depends_on = [ helm_release.argocd, helm_release.argo_rollouts]
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"

@@ -4,6 +4,9 @@ resource "helm_release" "promtail" {
   chart            = "promtail"
   namespace        = "loki"
   create_namespace = false
+    depends_on = [
+    helm_release.loki
+  ]
 
   wait    = true
   timeout = 600

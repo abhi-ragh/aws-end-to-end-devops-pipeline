@@ -85,26 +85,26 @@ resource "helm_release" "kube_prometheus_stack" {
         ]
       }
 
-      prometheus = {
-        prometheusSpec = {
-          retention = "10d"
+    prometheus = {
+      prometheusSpec = {
+        retention = "10d"
+      }
+    }
+
+    alertmanager = {
+
+      serviceAccount = {
+        create = true
+        name   = "monitoring-kube-prometheus-alertmanager"
+        annotations = {
+          "eks.amazonaws.com/role-arn" = module.alertmanager_irsa.iam_role_arn
         }
       }
 
-alertmanager = {
-
-  serviceAccount = {
-    create = true
-    name   = "monitoring-kube-prometheus-alertmanager"
-    annotations = {
-      "eks.amazonaws.com/role-arn" = module.alertmanager_irsa.iam_role_arn
+      alertmanagerSpec = {
+        configSecret = "alertmanager-sns-config"
+      }
     }
-  }
-
-  alertmanagerSpec = {
-    configSecret = "alertmanager-sns-config"
-  }
-}
 
     })
   ]

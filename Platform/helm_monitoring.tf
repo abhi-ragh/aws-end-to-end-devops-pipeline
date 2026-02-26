@@ -53,9 +53,6 @@ resource "helm_release" "kube_prometheus_stack" {
   values = [
     yamlencode({
 
-      ########################
-      # GRAFANA
-      ########################
       grafana = {
         service = {
           type = "LoadBalancer"
@@ -88,9 +85,6 @@ resource "helm_release" "kube_prometheus_stack" {
         ]
       }
 
-      ########################
-      # PROMETHEUS
-      ########################
       prometheus = {
         service = {
           type = "LoadBalancer"
@@ -106,9 +100,6 @@ resource "helm_release" "kube_prometheus_stack" {
         }
       }
 
-      ########################
-      # ALERTMANAGER
-      ########################
 alertmanager = {
 
   serviceAccount = {

@@ -15,6 +15,8 @@ resource "helm_release" "argocd" {
 
   values = [
     yamlencode({
+      installCRDs = true
+
       server = {
         service = {
           type = "LoadBalancer"
@@ -56,7 +58,6 @@ resource "helm_release" "argocd" {
           argocdServerAdminPasswordMtime = timestamp()
         }
       }
-
     })
   ]
 }

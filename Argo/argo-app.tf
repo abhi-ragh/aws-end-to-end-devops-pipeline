@@ -22,7 +22,6 @@ resource "kubernetes_manifest" "nodeapp" {
 
       syncPolicy = {
         automated = {
-          prune    = true
           selfHeal = true
         }
       }
@@ -54,7 +53,6 @@ resource "kubernetes_manifest" "alertmanager" {
 
       syncPolicy = {
         automated = {
-          prune    = true
           selfHeal = true
         }
       }

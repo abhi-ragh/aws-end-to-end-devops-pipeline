@@ -106,7 +106,7 @@ resource "kubernetes_manifest" "nodeapp" {
       source = {
         repoURL        = "https://github.com/abhi-ragh/aws-end-to-end-devops-pipeline.git"
         targetRevision = "main"
-        path           = "k8s/nodeapp"
+        path           = "K8s/nodeapp"
       }
 
       destination = {
@@ -139,7 +139,7 @@ resource "kubernetes_manifest" "alertmanager" {
       source = {
         repoURL        = "https://github.com/abhi-ragh/aws-end-to-end-devops-pipeline.git"
         targetRevision = "main"
-        path           = "k8s/alertmanager"
+        path           = "K8s/alertmanager"
       }
 
       destination = {

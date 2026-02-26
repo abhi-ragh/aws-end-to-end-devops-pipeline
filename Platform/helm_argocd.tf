@@ -56,7 +56,7 @@ resource "helm_release" "argocd" {
           argocdServerAdminPasswordMtime = timestamp()
         }
       }
-      
+
     })
   ]
 }
@@ -89,4 +89,70 @@ resource "helm_release" "argo_rollouts" {
       }
     })
   ]
+}
+
+resource "kubernetes_manifest" "nodeapp" {
+  depends_on = [ helm_release.argocd ]
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+    metadata = {
+      name      = "nodeapp"
+      namespace = "argocd"
+    }
+    spec = {
+      project = "default"
+
+      source = {
+        repoURL        = "https://github.com/abhi-ragh/aws-end-to-end-devops-pipeline.git"
+        targetRevision = "main"
+        path           = "k8s/nodeapp"
+      }
+
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = "default"
+      }
+
+      syncPolicy = {
+        automated = {
+          prune    = true
+          selfHeal = true
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "alertmanager" {
+  depends_on = [ helm_release.argocd ]
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+    metadata = {
+      name      = "alertmanager"
+      namespace = "argocd"
+    }
+    spec = {
+      project = "default"
+
+      source = {
+        repoURL        = "https://github.com/abhi-ragh/aws-end-to-end-devops-pipeline.git"
+        targetRevision = "main"
+        path           = "k8s/alertmanager"
+      }
+
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = "default"
+      }
+
+      syncPolicy = {
+        automated = {
+          prune    = true
+          selfHeal = true
+        }
+      }
+    }
+  }
 }

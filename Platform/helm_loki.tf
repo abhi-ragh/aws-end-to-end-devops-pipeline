@@ -14,15 +14,6 @@ resource "helm_release" "loki" {
       deploymentMode = "SingleBinary"
 
       singleBinary = {
-        service = {
-          type = "LoadBalancer"
-          annotations = {
-            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
-            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
-            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-          }
-        }
-
         resources = {
           requests = {
             cpu    = "200m"

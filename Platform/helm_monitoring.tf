@@ -86,15 +86,6 @@ resource "helm_release" "kube_prometheus_stack" {
       }
 
       prometheus = {
-        service = {
-          type = "LoadBalancer"
-          annotations = {
-            "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
-            "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
-            "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-          }
-        }
-
         prometheusSpec = {
           retention = "10d"
         }

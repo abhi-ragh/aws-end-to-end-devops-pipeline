@@ -64,10 +64,11 @@ resource "helm_release" "argocd" {
 
 resource "helm_release" "argo_rollouts" {
   name             = "argo-rollouts"
+  depends_on = [ helm_release.argocd ]
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-rollouts"
-  namespace        = "argo-rollouts"
-  create_namespace = true
+  namespace        = "argocd"
+  create_namespace = false
 
   wait    = true
   timeout = 600

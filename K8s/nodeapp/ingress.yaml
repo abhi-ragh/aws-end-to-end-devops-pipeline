@@ -15,13 +15,13 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: backend-service
+                name: backend-active
                 port:
                   number: 5000
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: nodeapp
+                name: frontend-active
                 port:
                   number: 80

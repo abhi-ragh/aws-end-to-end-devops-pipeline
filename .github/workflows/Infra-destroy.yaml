@@ -17,6 +17,14 @@ jobs:
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v3
 
+      - name: Terraform Init - Argo
+        run: terraform init
+        working-directory: Argo/
+
+      - name: Terraform Destroy - Argo
+        run: terraform destroy -auto-approve
+        working-directory: Argo/
+
       - name: Terraform Init - Platform
         run: terraform init
         working-directory: Platform/

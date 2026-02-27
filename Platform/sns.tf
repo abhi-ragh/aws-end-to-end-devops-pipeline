@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "eks_alerts" {
-  name = "eks-alerts"
+  name = "system-alerts"
 }
 
 resource "aws_sns_topic_subscription" "email_subscription" {

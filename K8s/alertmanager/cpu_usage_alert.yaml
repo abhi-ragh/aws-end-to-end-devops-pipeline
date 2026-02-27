@@ -20,7 +20,7 @@ spec:
                 kube_pod_container_resource_limits{resource="cpu"}
               )
             ) * 100 > 80
-          for: 5m
+          for: 1m
           labels:
             severity: warning
           annotations:

@@ -18,7 +18,7 @@ stringData:
     receivers:
       - name: sns-notifications
         sns_configs:
-          - topic_arn: arn:aws:sns:us-east-1:870017957268:eks-alerts
+          - topic_arn: arn:aws:sns:us-east-1:870017957268:system-alerts
             sigv4:
               region: us-east-1
             send_resolved: true
